@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Token Incrementer</title>
+</head>
+<body>
+  <center><h1>Live Token Number</h1>
+  <p><h2>Token: <span id="token-value">0</span></h2></p></center>
+
+  <script>
+    // Function to update the token value on the frontend
+    function updateTokenDisplay(value) {
+      document.getElementById('token-value').textContent = value;
+    }
+
+    // Function to fetch the current token value from the backend
+    function fetchTokenValue() {
+      fetch('/api/token')
+        .then(response => response.json())
+        .then(data => {
+          updateTokenDisplay(data.token);
+        })
+        .catch(error => {
+          console.log('Error:', error);
+        });
+    }
+
+    // Start fetching the token value immediately
+    fetchTokenValue();
+
+    // Update the token value every 20 seconds
+    setInterval(fetchTokenValue, 20000);
+  </script>
+</body>
+</html>
